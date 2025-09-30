@@ -1,0 +1,44 @@
+{
+    "name": "@schorts/firestore-dao",
+    "version": "1.0.0",
+    "description": "",
+    "main": "./dist/index.js",
+    "types": "./dist/index.d.ts",
+    "scripts": {
+        "build": "tsc",
+        "test": "jest",
+        "test:watch": "jest --watch",
+        "test:coverage": "jest --coverage",
+        "test:ci": "jest --ci --coverage --watchAll=false"
+    },
+    "author": "Jorge Castillo (https://github.com/schorts99)",
+    "license": "LGPL-3.0-or-later",
+    "devDependencies": {
+        "@jest/globals": "^30.1.2",
+        "@types/jest": "^30.0.0",
+        "@types/node": "^24.5.2",
+        "expect-type": "^1.2.2",
+        "jest": "^30.1.3",
+        "jest-html-reporter": "^4.3.0",
+        "ts-jest": "^29.4.4",
+        "typescript": "^5.9.2"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/schorts99/firestore-dao.git"
+    },
+    "keywords": [
+        "dao",
+        "value-objects",
+        "criteria",
+        "models",
+        "entities"
+    ],
+    "bugs": {
+        "url": "https://github.com/schorts99/firestore-dao/issues"
+    },
+    "homepage": "https://github.com/schorts99/firestore-dao#readme",
+    "dependencies": {
+        "@schorts/shared-kernel": "^1.1.2"
+    }
+}
