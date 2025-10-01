@@ -12,14 +12,14 @@ const { transform } = require("typescript");
     moduleFileExtensions: ["ts", "js", "json", "node"],
     testMatch: ["**/__tests__/**/*.ts", "**/?(*.)+(spec|test).ts"],
     collectCoverageFrom: [
-      "src/**/*.ts",
-      "!src/**/*.d.ts",
+      "src/*.ts",
+      "!src/*.d.ts",
       "!src/index.ts",
     ],
     coverageDirectory: "coverage",
     coverageReporters: ["text", "lcov", "html"],
     moduleNameMapper: {
-      "^@schorts/shared-kernel/(.*)$": "<rootDir>/src/$1",
+      "^@schorts/firestore-dao/(.*)$": "<rootDir>/src/$1",
     },
   };
   
