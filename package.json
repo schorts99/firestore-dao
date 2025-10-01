@@ -1,8 +1,8 @@
 {
   "name": "@schorts/firestore-dao",
-  "version": "1.0.1",
+  "version": "0.0.1",
   "description": "",
-	"main": "./dist/cjs/index.js",
+  "main": "./dist/cjs/index.js",
   "module": "./dist/esm/index.js",
   "types": "./dist/types/index.d.ts",
   "exports": {
@@ -43,10 +43,15 @@
     "models",
     "entities",
     "unit-of-work",
-		"firestore"
+    "firestore"
   ],
   "bugs": {
     "url": "https://github.com/schorts99/firestore-dao/issues"
   },
-  "homepage": "https://github.com/schorts99/firestore-dao#readme"
+  "homepage": "https://github.com/schorts99/firestore-dao#readme",
+  "dependencies": {
+    "@schorts/shared-kernel": "^1.1.4",
+    "firebase": "^12.3.0",
+    "geofire-common": "^6.0.0"
+  }
 }

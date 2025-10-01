@@ -9,10 +9,12 @@
     // See also https://aka.ms/tsconfig/module
     "target": "esnext",
     "types": [],
+    "module": "nodenext",
+    "moduleResolution": "nodenext",
     // For nodejs:
     // "lib": ["esnext"],
     // "types": ["node"],
-    // and npm install -D @types/node
+    // and npm install -D @F/node
 
     // Other Outputs
     "sourceMap": true,
@@ -40,6 +42,6 @@
     "moduleDetection": "force",
     "skipLibCheck": true,
   },
-  "include": ["src/**/*"],
+  "include": ["src/**/*", "__tests__/mocks", "__tests__/firestore-mock.ts"],
   "exclude": ["node_modules", "dist"]
 }
