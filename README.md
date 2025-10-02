@@ -2,6 +2,12 @@
 
 This module provides a type-safe, domain-driven abstraction over Firestore persistence. It integrates tightly with the `Model`, `Entity`, `Criteria` and `UnitOfWork` constructs from the [Shared Kernel](https://www.npmjs.com/package/@schorts/shared-kernel), enabling expressive, consistent, and testable data access across bounded contexts.
 
+## 🚀 Installation
+
+```bash
+npm install --save @schorts/firestore-dao
+```
+
 ## 🧩 Purpose
 
 Firestore DAOs encapsulate all persistence logic for domain entities, including:
