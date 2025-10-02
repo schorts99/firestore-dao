@@ -1,6 +1,6 @@
 {
   "name": "@schorts/firestore-dao",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "",
   "main": "./dist/cjs/index.js",
   "module": "./dist/esm/index.js",
@@ -50,7 +50,7 @@
   },
   "homepage": "https://github.com/schorts99/firestore-dao#readme",
   "dependencies": {
-    "@schorts/shared-kernel": "^1.1.5",
+    "@schorts/shared-kernel": "^1.2.0",
     "firebase": "^12.3.0",
     "geofire-common": "^6.0.0"
   }
