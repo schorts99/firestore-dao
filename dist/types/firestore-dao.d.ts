@@ -1,10 +1,10 @@
-import { Firestore } from "firebase/firestore";
+import { CollectionReference } from "firebase/firestore";
 import { DAO, BaseModel, ValueObject, Entity as BaseEntity, Criteria } from "@schorts/shared-kernel";
 import { FirestoreUnitOfWork } from "./firestore-unit-of-work";
 export declare abstract class FirestoreDAO<Model extends BaseModel, Entity extends BaseEntity<ValueObject, Model>> implements DAO<Model, Entity> {
     private readonly collection;
     private readonly firestoreEntityFactory;
-    constructor(firestore: Firestore, collectionName: string);
+    constructor(collection: CollectionReference);
     findByID(id: Entity["id"]["value"]): Promise<Entity | null>;
     findOneBy(criteria: Criteria): Promise<Entity | null>;
     getAll(): Promise<Entity[]>;

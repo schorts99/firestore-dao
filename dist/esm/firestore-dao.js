@@ -8,9 +8,9 @@ const entity_firestore_factory_1 = require("./entity-firestore-factory");
 class FirestoreDAO {
     collection;
     firestoreEntityFactory;
-    constructor(firestore, collectionName) {
-        this.collection = (0, firestore_1.collection)(firestore, collectionName);
-        this.firestoreEntityFactory = new firestore_entity_factory_1.FirestoreEntityFactory(collectionName);
+    constructor(collection) {
+        this.collection = collection;
+        this.firestoreEntityFactory = new firestore_entity_factory_1.FirestoreEntityFactory(collection.path);
     }
     async findByID(id) {
         const docRef = (0, firestore_1.doc)(this.collection, typeof id === "string" ? id : id.toString());

@@ -3,8 +3,6 @@ import {
   doc,
   getDoc,
   getDocs,
-  Firestore,
-  collection,
   setDoc,
   updateDoc,
   deleteDoc,
@@ -19,7 +17,6 @@ import {
 
 import { FirestoreCriteriaQueryExecutor } from "./firestore-criteria-query-executor";
 import { FirestoreEntityFactory } from "./firestore-entity-factory";
-import { PrimitiveTypesToFirestoreFormmater } from "./primitive-types-to-firestore-formatter";
 import { FirestoreUnitOfWork } from "./firestore-unit-of-work";
 import { EntityFirestoreFactory } from "./entity-firestore-factory";
 
@@ -27,9 +24,9 @@ export abstract class FirestoreDAO<Model extends BaseModel, Entity extends BaseE
   private readonly collection: CollectionReference;
   private readonly firestoreEntityFactory: FirestoreEntityFactory<Entity>;
 
-  constructor(firestore: Firestore, collectionName: string) {
-    this.collection = collection(firestore, collectionName);
-    this.firestoreEntityFactory = new FirestoreEntityFactory(collectionName);
+  constructor(collection: CollectionReference) {
+    this.collection = collection;
+    this.firestoreEntityFactory = new FirestoreEntityFactory(collection.path);
   }
 
   async findByID(id: Entity["id"]["value"]): Promise<Entity | null> {
