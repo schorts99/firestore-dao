@@ -5,4 +5,8 @@ export { CriteriaToFirestoreSymbolsTranslator } from "./criteria-to-firestore-sy
 export { FirestoreEntityFactory } from "./firestore-entity-factory";
 export { PrimitiveTypesToFirestoreFormmater } from "./primitive-types-to-firestore-formatter";
 export { EntityFirestoreFactory } from "./entity-firestore-factory";
+export { collection, getFirestore, Firestore } from "firebase/firestore";
+export { initializeApp, getApps } from "firebase/app";
+export { EntityRegistry, RegisterEntity } from "@schorts/shared-kernel";
+export type { FirebaseApp } from "firebase/app";
 export * from "./exceptions";

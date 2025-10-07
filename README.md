@@ -30,6 +30,12 @@ Each DAO implements the following shared kernel interfaces:
 ## 🧪 Example Usage
 
 ```ts
+import { initializeApp, getFirestore, EntityRegistry } from "@schorts/firestore-dao";
+
+// You need to use the internal firebase/firestore packages and register you entity via EntityRegistry
+
+EntityRegistry.register("users", User);
+
 const user = new User({ id: "abc123", name: "Alice" });
 
 await userDAO.create(user); // direct write
