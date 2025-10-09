@@ -14,7 +14,7 @@ var __exportStar = (this && this.__exportStar) || function(m, exports) {
     for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports, p)) __createBinding(exports, m, p);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.RegisterEntity = exports.EntityRegistry = exports.getApps = exports.initializeApp = exports.Firestore = exports.getFirestore = exports.collection = exports.EntityFirestoreFactory = exports.PrimitiveTypesToFirestoreFormmater = exports.FirestoreEntityFactory = exports.CriteriaToFirestoreSymbolsTranslator = exports.FirestoreTypesToPrimitivesFormatter = exports.FirestoreUnitOfWork = exports.FirestoreDAO = void 0;
+exports.RegisterEntity = exports.EntityRegistry = exports.getApps = exports.initializeApp = exports.getAuth = exports.Firestore = exports.getFirestore = exports.collection = exports.EntityFirestoreFactory = exports.PrimitiveTypesToFirestoreFormmater = exports.FirestoreEntityFactory = exports.CriteriaToFirestoreSymbolsTranslator = exports.FirestoreTypesToPrimitivesFormatter = exports.FirestoreUnitOfWork = exports.FirestoreDAO = void 0;
 var firestore_dao_1 = require("./firestore-dao");
 Object.defineProperty(exports, "FirestoreDAO", { enumerable: true, get: function () { return firestore_dao_1.FirestoreDAO; } });
 var firestore_unit_of_work_1 = require("./firestore-unit-of-work");
@@ -33,6 +33,8 @@ var firestore_1 = require("firebase/firestore");
 Object.defineProperty(exports, "collection", { enumerable: true, get: function () { return firestore_1.collection; } });
 Object.defineProperty(exports, "getFirestore", { enumerable: true, get: function () { return firestore_1.getFirestore; } });
 Object.defineProperty(exports, "Firestore", { enumerable: true, get: function () { return firestore_1.Firestore; } });
+var auth_1 = require("firebase/auth");
+Object.defineProperty(exports, "getAuth", { enumerable: true, get: function () { return auth_1.getAuth; } });
 var app_1 = require("firebase/app");
 Object.defineProperty(exports, "initializeApp", { enumerable: true, get: function () { return app_1.initializeApp; } });
 Object.defineProperty(exports, "getApps", { enumerable: true, get: function () { return app_1.getApps; } });
