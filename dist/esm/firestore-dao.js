@@ -40,6 +40,10 @@ class FirestoreDAO {
         }
         return this.firestoreEntityFactory.fromSnapshots(querySnap.docs);
     }
+    async countBy(criteria) {
+        const querySnap = await firestore_criteria_query_executor_1.FirestoreCriteriaQueryExecutor.execute(this.collection, criteria);
+        return querySnap.size;
+    }
     async create(entity, uow) {
         const docRef = (0, firestore_1.doc)(this.collection, typeof entity.id.value === "string" ? entity.id.value : entity.id.value.toString());
         const data = entity_firestore_factory_1.EntityFirestoreFactory.fromEntity(entity);
