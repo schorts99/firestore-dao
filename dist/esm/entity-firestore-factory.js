@@ -6,7 +6,7 @@ class EntityFirestoreFactory {
     static fromEntity(entity) {
         const raw = {
             ...entity.toPrimitives(),
-            ...primitive_types_to_firestore_formatter_1.PrimitiveTypesToFirestoreFormmater.format(entity),
+            ...primitive_types_to_firestore_formatter_1.PrimitiveTypesToFirestoreFormatter.format(entity),
         };
         delete raw["id"];
         return raw;

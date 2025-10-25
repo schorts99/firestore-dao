@@ -12,12 +12,12 @@ import {
   startAfter,
 } from "firebase/firestore";
 import { geohashQueryBounds, distanceBetween } from "geofire-common";
-import { Criteria, Order } from "@schorts/shared-kernel";
+import { Criteria } from "@schorts/shared-kernel";
 
 import { CriteriaToFirestoreSymbolsTranslator } from "./criteria-to-firestore-symbos-translator";
 
 export class FirestoreCriteriaQueryExecutor {
-  static async execute(collection: CollectionReference, criteria: Criteria) {
+  static async execute(collection: CollectionReference, criteria: Criteria): Promise<QuerySnapshot> {
     const geoFilter = criteria.filters.find(f => f.operator === "GEO_RADIUS");
 
     if (geoFilter) {
@@ -26,29 +26,33 @@ export class FirestoreCriteriaQueryExecutor {
       const bounds = geohashQueryBounds(center, radiusInM);
       const promises: Promise<QuerySnapshot>[] = [];
 
-      for (const b of bounds) {
+      for (const [start, end] of bounds) {
         const constraints: QueryConstraint[] = [];
 
+        // Apply non-geo filters
         for (const filter of criteria.filters) {
           if (filter.field === geoField) continue;
 
-          const firestoreField = CriteriaToFirestoreSymbolsTranslator.translateField(filter.field);
-          const firestoreOperator = CriteriaToFirestoreSymbolsTranslator.translateOperator(filter.operator);
-          const firestoreValue = CriteriaToFirestoreSymbolsTranslator.translateValue(filter.value);
+          const field = CriteriaToFirestoreSymbolsTranslator.translateField(filter.field);
+          const operator = CriteriaToFirestoreSymbolsTranslator.translateOperator(filter.operator);
+          const value = CriteriaToFirestoreSymbolsTranslator.translateValue(filter.value);
 
-          constraints.push(where(firestoreField, firestoreOperator, firestoreValue));
+          constraints.push(where(field, operator, value));
         }
 
+        // Geo bounding box constraints
         constraints.push(orderBy(`${geoField}_geohash`));
-        constraints.push(startAt(b[0]));
-        constraints.push(endAt(b[1]));
+        constraints.push(startAt(start));
+        constraints.push(endAt(end));
 
+        // Apply ordering
         for (const order of criteria.orders) {
-          const firestoreDirection = CriteriaToFirestoreSymbolsTranslator.translateOrderDirection(order.direction);
-          constraints.push(orderBy(order.field, firestoreDirection ?? undefined));
+          const direction = CriteriaToFirestoreSymbolsTranslator.translateOrderDirection(order.direction);
+          constraints.push(orderBy(order.field, direction ?? undefined));
         }
 
-        if (criteria.limit) {
+        // Apply limit
+        if (criteria.limit !== undefined) {
           constraints.push(limit(criteria.limit));
         }
 
@@ -59,7 +63,9 @@ export class FirestoreCriteriaQueryExecutor {
       const allDocs = snapshots.flatMap(snap => snap.docs);
       const uniqueDocsMap = new Map<string, typeof allDocs[0]>();
 
-      allDocs.forEach(doc => uniqueDocsMap.set(doc.id, doc));
+      for (const doc of allDocs) {
+        uniqueDocsMap.set(doc.id, doc);
+      }
 
       const filteredDocs = Array.from(uniqueDocsMap.values()).filter(doc => {
         const data = doc.data();
@@ -76,31 +82,32 @@ export class FirestoreCriteriaQueryExecutor {
         forEach: (callback: (doc: any) => void) => filteredDocs.forEach(callback),
         size: filteredDocs.length,
       } as QuerySnapshot;
-    } else {
-      const constraints: QueryConstraint[] = [];
-
-      for (const filter of criteria.filters) {
-        const firestoreField = CriteriaToFirestoreSymbolsTranslator.translateField(filter.field);
-        const firestoreOperator = CriteriaToFirestoreSymbolsTranslator.translateOperator(filter.operator);
-        const firestoreValue = CriteriaToFirestoreSymbolsTranslator.translateValue(filter.value);
-
-        constraints.push(where(firestoreField, firestoreOperator, firestoreValue));
-      }
-
-      for (const order of criteria.orders) {
-        const firestoreDirection = CriteriaToFirestoreSymbolsTranslator.translateOrderDirection(order.direction);
-        constraints.push(orderBy(order.field, firestoreDirection ?? undefined));
-      }
-
-      if (criteria.limit) {
-        constraints.push(limit(criteria.limit));
-      }
-
-      if (criteria.offset) {
-        constraints.push(startAfter(criteria.offset));
-      }
-
-      return getDocs(query(collection, ...constraints));
     }
+
+    // Non-geo query
+    const constraints: QueryConstraint[] = [];
+
+    for (const filter of criteria.filters) {
+      const field = CriteriaToFirestoreSymbolsTranslator.translateField(filter.field);
+      const operator = CriteriaToFirestoreSymbolsTranslator.translateOperator(filter.operator);
+      const value = CriteriaToFirestoreSymbolsTranslator.translateValue(filter.value);
+
+      constraints.push(where(field, operator, value));
+    }
+
+    for (const order of criteria.orders) {
+      const direction = CriteriaToFirestoreSymbolsTranslator.translateOrderDirection(order.direction);
+      constraints.push(orderBy(order.field, direction ?? undefined));
+    }
+
+    if (criteria.limit !== undefined) {
+      constraints.push(limit(criteria.limit));
+    }
+
+    if (criteria.offset !== undefined) {
+      constraints.push(startAfter(criteria.offset));
+    }
+
+    return getDocs(query(collection, ...constraints));
   }
 }

@@ -1,12 +1,12 @@
 import { Timestamp } from "firebase/firestore";
 import { Geohash, geohashForLocation } from "geofire-common";
-import { CoordinatesValue, PascalCamelToSnake } from "@schorts/shared-kernel";
+import { CoordinatesValue, PascalCamelToSnake, DateValue } from "@schorts/shared-kernel";
 
-export class PrimitiveTypesToFirestoreFormmater {
-  static format<Entity>(entity: Entity) {
+export class PrimitiveTypesToFirestoreFormatter {
+  static format<Entity>(entity: Entity): Record<string, unknown> {
     return {
-      ...this.formatCoordinates<Entity>(entity),
-      ...this.formatDates<Entity>(entity),
+      ...this.formatCoordinates(entity),
+      ...this.formatDates(entity),
     };
   }
 
@@ -14,12 +14,15 @@ export class PrimitiveTypesToFirestoreFormmater {
     const geoData: Record<string, Geohash> = {};
 
     for (const key in entity) {
-      if (Object.prototype.hasOwnProperty.call(entity, key)) {
-        const value = (entity as any)[key];
+      if (!Object.prototype.hasOwnProperty.call(entity, key)) continue;
 
-        if (value instanceof CoordinatesValue) {
-          geoData[`${PascalCamelToSnake.format(key)}_geohash`] = geohashForLocation([value.value.latitude, value.value.longitude]);
-        }
+      const value = (entity as any)[key];
+      if (value instanceof CoordinatesValue) {
+        const snakeKey = PascalCamelToSnake.format(key);
+        geoData[`${snakeKey}_geohash`] = geohashForLocation([
+          value.value.latitude,
+          value.value.longitude,
+        ]);
       }
     }
 
@@ -30,12 +33,16 @@ export class PrimitiveTypesToFirestoreFormmater {
     const formattedDates: Record<string, Timestamp> = {};
 
     for (const key in entity) {
-      if (Object.prototype.hasOwnProperty.call(entity, key)) {
-        const value = (entity as any)[key];
+      if (!Object.prototype.hasOwnProperty.call(entity, key)) continue;
 
-        if (value instanceof Date) {
-          formattedDates[PascalCamelToSnake.format(key)] = Timestamp.fromDate(value);
-        }
+      const value = (entity as any)[key];
+
+      if (value instanceof Date) {
+        const snakeKey = PascalCamelToSnake.format(key);
+        formattedDates[snakeKey] = Timestamp.fromDate(value);
+      } else if (value instanceof DateValue && value.value) {
+        const snakeKey = PascalCamelToSnake.format(key);
+        formattedDates[snakeKey] = Timestamp.fromDate(value.value);
       }
     }
 

@@ -1,9 +1,7 @@
 import { Timestamp } from "firebase/firestore";
 import { Geohash } from "geofire-common";
-export declare class PrimitiveTypesToFirestoreFormmater {
-    static format<Entity>(entity: Entity): {
-        [x: string]: string | Timestamp;
-    };
+export declare class PrimitiveTypesToFirestoreFormatter {
+    static format<Entity>(entity: Entity): Record<string, unknown>;
     static formatCoordinates<Entity>(entity: Entity): Record<string, Geohash>;
     static formatDates<Entity>(entity: Entity): Record<string, Timestamp>;
 }

@@ -14,7 +14,7 @@ var __exportStar = (this && this.__exportStar) || function(m, exports) {
     for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports, p)) __createBinding(exports, m, p);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.EntityFirestoreFactory = exports.PrimitiveTypesToFirestoreFormmater = exports.FirestoreEntityFactory = exports.CriteriaToFirestoreSymbolsTranslator = exports.FirestoreTypesToPrimitivesFormatter = exports.FirestoreUnitOfWork = exports.FirestoreDAO = void 0;
+exports.getAnalytics = exports.RegisterEntity = exports.EntityRegistry = exports.getApps = exports.initializeApp = exports.getAuth = exports.Firestore = exports.getFirestore = exports.collection = exports.EntityFirestoreFactory = exports.PrimitiveTypesToFirestoreFormatter = exports.FirestoreEntityFactory = exports.CriteriaToFirestoreSymbolsTranslator = exports.FirestoreTypesToPrimitivesFormatter = exports.FirestoreUnitOfWork = exports.FirestoreDAO = void 0;
 var firestore_dao_1 = require("./firestore-dao");
 Object.defineProperty(exports, "FirestoreDAO", { enumerable: true, get: function () { return firestore_dao_1.FirestoreDAO; } });
 var firestore_unit_of_work_1 = require("./firestore-unit-of-work");
@@ -26,8 +26,22 @@ Object.defineProperty(exports, "CriteriaToFirestoreSymbolsTranslator", { enumera
 var firestore_entity_factory_1 = require("./firestore-entity-factory");
 Object.defineProperty(exports, "FirestoreEntityFactory", { enumerable: true, get: function () { return firestore_entity_factory_1.FirestoreEntityFactory; } });
 var primitive_types_to_firestore_formatter_1 = require("./primitive-types-to-firestore-formatter");
-Object.defineProperty(exports, "PrimitiveTypesToFirestoreFormmater", { enumerable: true, get: function () { return primitive_types_to_firestore_formatter_1.PrimitiveTypesToFirestoreFormmater; } });
+Object.defineProperty(exports, "PrimitiveTypesToFirestoreFormatter", { enumerable: true, get: function () { return primitive_types_to_firestore_formatter_1.PrimitiveTypesToFirestoreFormatter; } });
 var entity_firestore_factory_1 = require("./entity-firestore-factory");
 Object.defineProperty(exports, "EntityFirestoreFactory", { enumerable: true, get: function () { return entity_firestore_factory_1.EntityFirestoreFactory; } });
+var firestore_1 = require("firebase/firestore");
+Object.defineProperty(exports, "collection", { enumerable: true, get: function () { return firestore_1.collection; } });
+Object.defineProperty(exports, "getFirestore", { enumerable: true, get: function () { return firestore_1.getFirestore; } });
+Object.defineProperty(exports, "Firestore", { enumerable: true, get: function () { return firestore_1.Firestore; } });
+var auth_1 = require("firebase/auth");
+Object.defineProperty(exports, "getAuth", { enumerable: true, get: function () { return auth_1.getAuth; } });
+var app_1 = require("firebase/app");
+Object.defineProperty(exports, "initializeApp", { enumerable: true, get: function () { return app_1.initializeApp; } });
+Object.defineProperty(exports, "getApps", { enumerable: true, get: function () { return app_1.getApps; } });
+var shared_kernel_1 = require("@schorts/shared-kernel");
+Object.defineProperty(exports, "EntityRegistry", { enumerable: true, get: function () { return shared_kernel_1.EntityRegistry; } });
+Object.defineProperty(exports, "RegisterEntity", { enumerable: true, get: function () { return shared_kernel_1.RegisterEntity; } });
+var analytics_1 = require("firebase/analytics");
+Object.defineProperty(exports, "getAnalytics", { enumerable: true, get: function () { return analytics_1.getAnalytics; } });
 __exportStar(require("./exceptions"), exports);
 //# sourceMappingURL=index.js.map
